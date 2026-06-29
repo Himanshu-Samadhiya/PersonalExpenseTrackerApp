@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack Pro Personal Finance Tracker</title>
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== LOGIN SECTION ==================== -->
+  <div id="login-section" class="auth-wrapper">
+    <!-- Login Card -->
+    <div id="auth-login-card" class="auth-card">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Login to FinTrack Pro</p>
+      
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" placeholder="Enter username" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-blue btn-block">
+          Login
+        </button>
+        
+        <p class="auth-toggle-text">
+          Don't have an account? <a href="#" id="go-to-register">Register here</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Register Card (hidden initially) -->
+    <div id="auth-register-card" class="auth-card hidden">
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-subtitle">Join FinTrack Pro</p>
+      
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label for="register-username">Choose a Username</label>
+          <input type="text" id="register-username" placeholder="Choose a username" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" placeholder="Create a password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-green btn-block">
+          Register
+        </button>
+        
+        <p class="auth-toggle-text">
+          Already have an account? <a href="#" id="go-to-login">Login here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN APP SECTION ==================== -->
+  <div id="app-section" class="app-wrapper hidden">
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo-header">
+          <i data-lucide="layers" class="brand-icon"></i>
+          <div class="logo-text-wrapper">
+            <span class="logo-title">FinTrack Pro</span>
+            <span class="logo-subtitle">Enterprise Finance</span>
+          </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+          <a href="#" id="nav-dashboard" class="nav-item active">
+            <i data-lucide="layout-dashboard"></i> Dashboard
+          </a>
+          <a href="#" id="nav-settings" class="nav-item">
+            <i data-lucide="settings"></i> Settings
+          </a>
+        </nav>
+      </div>
+      
+      <div class="sidebar-bottom">
+        <button id="add-transaction-btn" class="btn btn-dark-block">
+          <i data-lucide="plus"></i> Add Transaction
+        </button>
+      </div>
+    </aside>
+
+    <!-- RIGHT CONTENT AREA -->
+    <div class="main-content">
+      <!-- Top header (User actions) -->
+      <header class="top-header">
+        <button id="mobile-sidebar-toggle" class="btn btn-outline mobile-menu-btn" style="margin-right: auto; display: none; padding: 6px; border-radius: 6px; align-items: center; justify-content: center; height: 36px; width: 36px;">
+          <i data-lucide="menu"></i>
+        </button>
+        <div class="profile-badge">
+          <span id="user-display-name">Himanshu</span>
+        </div>
+        <button id="logout-btn" class="btn btn-outline" title="Logout">
+          <i data-lucide="log-out"></i> Logout
+        </button>
+      </header>
+      
+      <!-- Content Inner -->
+      <main class="app-content">
+        
+        <!-- ==================== DASHBOARD VIEW ==================== -->
+        <section id="view-dashboard" class="view-section">
+          <!-- Page Title -->
+          <div class="page-header">
+            <h1>Financial Overview</h1>
+            <p>Real-time tracking application</p>
+          </div>
+
+          <!-- 4 Stat Cards Grid -->
+          <div class="stats-grid">
+            <!-- Balance Card -->
+            <div class="stat-card">
+              <div class="stat-icon-wrapper balance-badge">
+                <i data-lucide="landmark"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Current Balance</span>
+                <span id="stat-balance" class="stat-value">$0.00</span>
+              </div>
+            </div>
+            
+            <!-- Income Card -->
+            <div class="stat-card">
+              <div class="stat-icon-wrapper income-badge">
+                <i data-lucide="trending-up"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Income</span>
+                <span id="stat-income" class="stat-value">$0.00</span>
+              </div>
+            </div>
+            
+            <!-- Expense Card -->
+            <div class="stat-card">
+              <div class="stat-icon-wrapper expense-badge">
+                <i data-lucide="trending-down"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Expense</span>
+                <span id="stat-expense" class="stat-value">$0.00</span>
+              </div>
+            </div>
+            
+            <!-- Transactions Card -->
+            <div class="stat-card">
+              <div class="stat-icon-wrapper count-badge">
+                <i data-lucide="wallet"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Transactions</span>
+                <span id="stat-count" class="stat-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mid Row: Chart & Preferences -->
+          <div class="dashboard-row">
+            <!-- Cash Flow Chart Container -->
+            <div class="card chart-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <h2>Cash Flow Analysis</h2>
+                </div>
+              </div>
+              <div class="card-body chart-body">
+                <div class="chart-container">
+                  <canvas id="cashflow-chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preferences Block -->
+            <div class="card preferences-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <h2>Preferences</h2>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="preference-item">
+                  <span class="preference-label">Dark Mode</span>
+                  <label class="switch">
+                    <input type="checkbox" id="settings-theme-toggle">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                
+                <button type="button" id="reset-data-btn" class="btn btn-light-danger">
+                  <i data-lucide="trash-2"></i> Reset All Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Table Card -->
+          <div class="card transactions-card">
+            <div class="card-header flex-col-header">
+              <div class="header-title">
+                <h2>All Transactions</h2>
+              </div>
+              <div class="table-controls-row">
+                <!-- Search -->
+                <div class="search-wrapper">
+                  <i data-lucide="search" class="search-icon"></i>
+                  <input type="text" id="search-input" placeholder="Search transactions...">
+                </div>
+                <!-- Dropdown Filter -->
+                <div class="select-wrapper">
+                  <select id="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="income">Income Only</option>
+                    <option value="expense">Expense Only</option>
+                  </select>
+                </div>
+                <!-- Quick Export -->
+                <button id="table-export-csv" class="btn btn-outline" title="Export CSV" style="padding: 6.4px 12px; height: 36px; border-radius: 6px; font-size: 13px; display: inline-flex; align-items: center; gap: 8px;">
+                  <i data-lucide="download"></i> Export CSV
+                </button>
+              </div>
+            </div>
+            
+            <div class="card-body table-responsive">
+              <table class="transaction-table">
+                <thead>
+                  <tr>
+                    <th>DATE</th>
+                    <th>DESCRIPTION</th>
+                    <th>CATEGORY</th>
+                    <th class="text-right">AMOUNT</th>
+                    <th class="text-center">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="transaction-tbody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+              
+              <!-- Empty State -->
+              <div id="table-empty-state" class="empty-state hidden">
+                <i data-lucide="inbox"></i>
+                <p>No transactions found. Start by adding one!</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SETTINGS VIEW ==================== -->
+        <section id="view-settings" class="view-section hidden">
+          <!-- Page Title -->
+          <div class="page-header">
+            <h1>Settings</h1>
+            <p>Manage your account profile and app formatting.</p>
+          </div>
+
+          <div class="card settings-card" style="max-width: 100%;">
+            <div class="card-header">
+              <div class="header-title">
+                <h2>Profile Details</h2>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="settings-form" class="settings-form">
+                <div class="form-grid" style="margin-bottom: 1.5rem;">
+                  <div class="form-group">
+                    <label for="settings-name">Full Name</label>
+                    <input type="text" id="settings-name" required placeholder="Full Name">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="settings-currency">Primary Currency</label>
+                    <select id="settings-currency" required>
+                      <option value="USD">USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                      <option value="INR">INR (₹)</option>
+                      <option value="JPY">JPY (¥)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="settings-footer-left">
+                  <button type="submit" class="btn btn-black">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Backup & Restore Card -->
+          <div class="card settings-card" style="max-width: 100%; margin-top: 20px;">
+            <div class="card-header">
+              <div class="header-title">
+                <h2>Backup & Restore</h2>
+              </div>
+            </div>
+            <div class="card-body">
+              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                Export your transaction records to a CSV sheet or restore your history using a backup file.
+              </p>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button id="settings-export-csv" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
+                  <i data-lucide="download"></i> Export CSV
+                </button>
+                <button id="settings-export-json" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
+                  <i data-lucide="download-cloud"></i> Export JSON Backup
+                </button>
+                <button id="settings-import-btn" class="btn btn-black" style="display: inline-flex; align-items: center; gap: 8px;">
+                  <i data-lucide="upload-cloud"></i> Import JSON Backup
+                </button>
+                <input type="file" id="import-file-input" accept=".json" style="display: none;">
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== TRANSACTION MODAL ==================== -->
+  <div id="transaction-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Transaction</h3>
+        <button id="modal-close-btn" class="modal-close"><i data-lucide="x"></i></button>
+      </div>
+      
+      <form id="transaction-form">
+        <div class="modal-body">
+          <!-- Type selection -->
+          <div class="form-group">
+            <label for="tx-type">Type</label>
+            <select id="tx-type" required>
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tx-description">Description</label>
+            <input type="text" id="tx-description" placeholder="e.g. Amazon, Salary, Coffee" required autocomplete="off">
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="tx-amount">Amount</label>
+              <input type="number" id="tx-amount" step="0.01" min="0.01" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="tx-date">Date</label>
+              <input type="date" id="tx-date" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tx-category">Category</label>
+            <select id="tx-category" required>
+              <option value="" disabled selected>Select a category</option>
+              <!-- Dynamic options loaded based on type -->
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-black btn-block" style="margin-top: 1.5rem; width: 100%;">
+            Save Transaction
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Main Script -->
+  <script src="script.js"></script>
+</body>
+</html>
